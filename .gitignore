@@ -1,0 +1,25 @@
+# Entorno virtual Python
+venv/
+env/
+ENV/
+
+# Archivos de entorno y credenciales sensibles
+.env
+!.env.example
+
+# Bytecode y cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Cache de pruebas y herramientas
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs del sistema
+*.log
+
+# Docker y volumenes locales
+.docker/

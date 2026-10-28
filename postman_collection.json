@@ -1,0 +1,1853 @@
+{
+  "info": {
+    "name": "API REST Gastronomía CGDSS - SENA",
+    "_postman_id": "ea4-gastronomia-collection-2026",
+    "description": "Colección completa de pruebas para la API REST de la Unidad Productiva de Gastronomía (CGDSS SENA). Incluye CRUDs, autenticación JWT, reportes y MongoDB.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01. Autenticación (RF01)",
+      "item": [
+        {
+          "name": "1.1 Login Admin (Obtener Token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"juan.admin@gastronomia.sena.edu.co\",\n  \"password\": \"Admin123*\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.2 Perfil Usuario Autenticado",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/perfil",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "perfil"
+              ]
+            }
+          }
+        },
+        {
+          "name": "1.3 Registro de Nuevo Usuario (Solo ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/registro",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "registro"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificacion\": \"1099887766\",\n  \"nombres\": \"Daniel\",\n  \"apellidos\": \"Reyes\",\n  \"correo\": \"daniel.cajero@gastronomia.sena.edu.co\",\n  \"password\": \"Admin123*\",\n  \"rol\": \"CAJERO\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02. Usuarios (RF02)",
+      "item": [
+        {
+          "name": "2.1 Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "2.2 Obtener Usuario por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "2.3 Crear Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificacion\": \"1011223344\",\n  \"nombres\": \"Felipe\",\n  \"apellidos\": \"G\\u00f3mez\",\n  \"correo\": \"felipe.cocina@gastronomia.sena.edu.co\",\n  \"password\": \"Admin123*\",\n  \"rol\": \"COCINERO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "2.4 Actualizar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "2"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombres\": \"Mar\\u00eda Alejandra Actualizada\"\n}"
+            }
+          }
+        },
+        {
+          "name": "2.5 Eliminar / Inactivar Usuario (RN04)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/usuarios/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03. Categorías (RF03)",
+      "item": [
+        {
+          "name": "3.1 Listar Categorías",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categorias/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3.2 Obtener Categoría por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categorias/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categorias",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3.3 Crear Categoría",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categorias/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Bebidas Calientes Especiales\",\n  \"descripcion\": \"Caf\\u00e9s gourmet y tisanas\"\n}"
+            }
+          }
+        },
+        {
+          "name": "3.4 Actualizar Categoría",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categorias/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categorias",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descripcion\": \"Almuerzos y platos principales preparados al d\\u00eda con men\\u00fa rotativo\"\n}"
+            }
+          }
+        },
+        {
+          "name": "3.5 Eliminar / Inactivar Categoría (RN04)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categorias/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categorias",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04. Productos (RF04)",
+      "item": [
+        {
+          "name": "4.1 Listar Productos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4.2 Obtener Producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4.3 Productos por Categoría",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/categoria/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos",
+                "categoria",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4.4 Receta (Ficha Técnica) de Producto (RF05)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/1/receta",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos",
+                "1",
+                "receta"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4.5 Costo de Producción y Margen (RF06)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/1/costo",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos",
+                "1",
+                "costo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4.6 Crear Producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"DES-002\",\n  \"nombre\": \"Combo Desayuno Huilense\",\n  \"descripcion\": \"Calentado con huevo y quesillo\",\n  \"precio_venta\": 12000.0,\n  \"unidad_venta\": \"Porci\\u00f3n\",\n  \"id_categoria\": 6\n}"
+            }
+          }
+        },
+        {
+          "name": "4.7 Actualizar Producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio_venta\": 15000.0\n}"
+            }
+          }
+        },
+        {
+          "name": "4.8 Eliminar / Inactivar Producto (RN04)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/productos/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "productos",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05. Insumos (RF07)",
+      "item": [
+        {
+          "name": "5.1 Listar Insumos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "5.2 Insumos con Stock Bajo (Alerta)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/stock-bajo",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos",
+                "stock-bajo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "5.3 Insumos Próximos a Vencer (7 días)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/por-vencer?dias=7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos",
+                "por-vencer?dias=7"
+              ]
+            }
+          }
+        },
+        {
+          "name": "5.4 Obtener Insumo por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "5.5 Crear Insumo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Queso Doble Crema\",\n  \"unidad_medida\": \"kg\",\n  \"stock_actual\": 15.0,\n  \"stock_minimo\": 3.0,\n  \"costo_unitario\": 18000.0,\n  \"fecha_vencimiento\": \"2026-11-20\"\n}"
+            }
+          }
+        },
+        {
+          "name": "5.6 Actualizar Insumo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock_minimo\": 6.0\n}"
+            }
+          }
+        },
+        {
+          "name": "5.7 Eliminar / Inactivar Insumo (RN04)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/insumos/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "insumos",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06. Recetas / Fichas Técnicas (RF05)",
+      "item": [
+        {
+          "name": "6.1 Listar Recetas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/recetas/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recetas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "6.2 Obtener Receta por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/recetas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recetas",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "6.3 Crear Detalle de Receta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/recetas/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recetas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_producto\": 2,\n  \"id_insumo\": 1,\n  \"cantidad\": 0.25\n}"
+            }
+          }
+        },
+        {
+          "name": "6.4 Actualizar Detalle de Receta",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/recetas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recetas",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cantidad\": 0.22\n}"
+            }
+          }
+        },
+        {
+          "name": "6.5 Eliminar Insumo de Receta",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/recetas/13",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recetas",
+                "13"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "07. Proveedores (RF08)",
+      "item": [
+        {
+          "name": "7.1 Listar Proveedores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/proveedores/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "proveedores"
+              ]
+            }
+          }
+        },
+        {
+          "name": "7.2 Obtener Proveedor por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/proveedores/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "proveedores",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "7.3 Historial de Compras de Proveedor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/proveedores/1/compras",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "proveedores",
+                "1",
+                "compras"
+              ]
+            }
+          }
+        },
+        {
+          "name": "7.4 Crear Proveedor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/proveedores/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "proveedores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nit\": \"900999888-1\",\n  \"razon_social\": \"Av\\u00edcola Santa Marta\",\n  \"telefono\": \"3123456789\",\n  \"correo\": \"ventas@santamarta.com\",\n  \"direccion\": \"Km 2 V\\u00eda Neiva\"\n}"
+            }
+          }
+        },
+        {
+          "name": "7.5 Actualizar Proveedor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/proveedores/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "proveedores",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telefono\": \"3109998877\"\n}"
+            }
+          }
+        },
+        {
+          "name": "7.6 Eliminar / Inactivar Proveedor (RN04)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/proveedores/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "proveedores",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "08. Compras e Inventario (RF08 & RN02)",
+      "item": [
+        {
+          "name": "8.1 Listar Compras",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/compras/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "compras"
+              ]
+            }
+          }
+        },
+        {
+          "name": "8.2 Obtener Factura de Compra por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/compras/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "compras",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "8.3 Registrar Compra (Aumenta stock y actualiza costo - RN02)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/compras/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "compras"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numero_factura\": \"FAC-POSTMAN-001\",\n  \"id_proveedor\": 1,\n  \"items\": [\n    {\n      \"id_insumo\": 1,\n      \"cantidad\": 15.0,\n      \"costo_unitario\": 24500.0\n    },\n    {\n      \"id_insumo\": 2,\n      \"cantidad\": 20.0,\n      \"costo_unitario\": 18500.0\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "8.4 Actualizar Compra",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/compras/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "compras",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numero_factura\": \"FAC-00101-MOD\"\n}"
+            }
+          }
+        },
+        {
+          "name": "8.5 Eliminar Compra",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/compras/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "compras",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "09. Clientes (RF09)",
+      "item": [
+        {
+          "name": "9.1 Listar Clientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "9.2 Obtener Cliente por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "9.3 Historial de Pedidos de Cliente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/1/pedidos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1",
+                "pedidos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "9.4 Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificacion\": \"1098765432\",\n  \"nombres\": \"Santiago\",\n  \"apellidos\": \"Duque\",\n  \"telefono\": \"3157778899\",\n  \"correo\": \"santiago.duque@soy.sena.edu.co\",\n  \"tipo_cliente\": \"APRENDIZ\"\n}"
+            }
+          }
+        },
+        {
+          "name": "9.5 Actualizar Cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telefono\": \"3110009988\"\n}"
+            }
+          }
+        },
+        {
+          "name": "9.6 Eliminar / Inactivar Cliente (RN04)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Pedidos (RF10, RN01, RN03, RN05)",
+      "item": [
+        {
+          "name": "10.1 Listar Pedidos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "10.2 Obtener Pedido por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "10.3 Pedidos Filtrados por Estado (PENDIENTE)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/estado/PENDIENTE",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos",
+                "estado",
+                "PENDIENTE"
+              ]
+            }
+          }
+        },
+        {
+          "name": "10.4 Registrar Pedido (API calcula subtotal y total - RN01)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_cliente\": 1,\n  \"tipo_pedido\": \"MESA\",\n  \"observaciones\": \"Mesa 4 - Servir caliente\",\n  \"items\": [\n    {\n      \"id_producto\": 1,\n      \"cantidad\": 2\n    },\n    {\n      \"id_producto\": 3,\n      \"cantidad\": 2\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "10.5 Cambiar Estado a ENTREGADO (Descuenta insumos con recetas - RN03/RN05)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/8/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos",
+                "8",
+                "estado"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"ENTREGADO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "10.6 Cambiar Estado a EN_PREPARACION",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/10/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos",
+                "10",
+                "estado"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"EN_PREPARACION\"\n}"
+            }
+          }
+        },
+        {
+          "name": "10.7 Actualizar Observaciones Pedido",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos",
+                "10"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observaciones\": \"Mesa 2 - Desayuno sin sal\"\n}"
+            }
+          }
+        },
+        {
+          "name": "10.8 Eliminar Pedido no entregado",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pedidos/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pedidos",
+                "10"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. Calificaciones NoSQL MongoDB (RF12)",
+      "item": [
+        {
+          "name": "11.1 Listar Calificaciones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calificaciones/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calificaciones"
+              ]
+            }
+          }
+        },
+        {
+          "name": "11.2 Calificaciones y Promedio por Producto",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calificaciones/producto/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calificaciones",
+                "producto",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "11.3 Registrar Calificación de Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calificaciones/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calificaciones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_pedido\": 100,\n  \"id_cliente\": 1,\n  \"fecha\": \"2026-10-16T12:00:00\",\n  \"calificacion_servicio\": 5,\n  \"comentario\": \"La comida estuvo exquisita y la atenci\\u00f3n fue muy oportuna.\",\n  \"productos\": [\n    {\n      \"id_producto\": 1,\n      \"nombre\": \"Almuerzo Ejecutivo Especial\",\n      \"calificacion\": 5\n    },\n    {\n      \"id_producto\": 3,\n      \"nombre\": \"Jugo Natural de Lulo\",\n      \"calificacion\": 5\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "11.4 Actualizar Calificación",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calificaciones/placeholder_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calificaciones",
+                "placeholder_id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comentario\": \"Comentario modificado\"\n}"
+            }
+          }
+        },
+        {
+          "name": "11.5 Eliminar Calificación",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calificaciones/placeholder_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calificaciones",
+                "placeholder_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. Reportes Financieros y Ventas (RF11)",
+      "item": [
+        {
+          "name": "12.1 Reporte Financiero de Ventas por Fechas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/ventas?desde=2026-10-01&hasta=2026-10-31",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "ventas?desde=2026-10-01&hasta=2026-10-31"
+              ]
+            }
+          }
+        },
+        {
+          "name": "12.2 Ranking de Productos Más Vendidos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/productos-mas-vendidos?limite=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "productos-mas-vendidos?limite=10"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
